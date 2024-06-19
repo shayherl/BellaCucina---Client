@@ -21,7 +21,46 @@
           Username length should be between 3-8 characters long
         </b-form-invalid-feedback>
         <b-form-invalid-feedback v-if="!$v.form.username.alpha">
-          Username alpha
+          Username can only contain letters
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group 
+        id="input-group-firstName"
+        label-cols-sm="3"
+        label="First Name:" 
+        label-for="firstName"
+      >
+        <b-form-input
+          id="firstName"
+          v-model="$v.form.firstName.$model"
+          type="text"
+          :state="validateState('firstName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.firstName.required">
+          First name is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.firstName.alpha">
+          First name can only contain letters
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group 
+        id="input-group-lastName"
+        label-cols-sm="3"
+        label="Last Name:" 
+        label-for="lastName">
+        <b-form-input
+          id="lastName"
+          v-model="$v.form.lastName.$model"
+          type="text"
+          :state="validateState('lastName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.lastName.required">
+          Last name is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.firstName.alpha">
+          Last name can only contain letters
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -57,7 +96,7 @@
         <b-form-invalid-feedback v-if="!$v.form.password.required">
           Password is required
         </b-form-invalid-feedback>
-        <b-form-text v-else-if="$v.form.password.$error" text-variant="info">
+        <b-form-text v-else-if="$v.form.password.$error" text-variant="danger">
           Your password should be <strong>strong</strong>. <br />
           For that, your password should be also:
         </b-form-text>
@@ -65,6 +104,12 @@
           v-if="$v.form.password.required && !$v.form.password.length"
         >
           Have length between 5-10 characters long
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="$v.form.password.$error && !$v.form.password.hasNumber">
+          Password must contain at least one number
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="$v.form.password.$error && !$v.form.password.hasSpecialChar">
+          Password must contain at least one special character
         </b-form-invalid-feedback>
       </b-form-group>
 
@@ -90,10 +135,29 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-button type="reset" variant="danger">Reset</b-button>
+      <b-form-group 
+        id="input-group-email"
+        label-cols-sm="3"
+        label="Email:" 
+        label-for="email">
+        <b-form-input
+          id="email"
+          v-model="$v.form.email.$model"
+          type="text"
+          :state="validateState('email')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.email.required">
+          Email is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-else-if="!$v.form.email.email">
+          Please enter a valid email address
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-button type="reset" variant="outline-danger">Reset</b-button>
       <b-button
         type="submit"
-        variant="primary"
+        variant="dark"
         style="width:250px;"
         class="ml-5 w-75"
         >Register</b-button
@@ -156,16 +220,30 @@ export default {
         length: (u) => minLength(3)(u) && maxLength(8)(u),
         alpha
       },
+      firstName: {
+        required,
+        alpha
+      },
+      lastName: {
+        required,
+        alpha
+      },
       country: {
         required
       },
       password: {
         required,
-        length: (p) => minLength(5)(p) && maxLength(10)(p)
+        length: (p) => minLength(5)(p) && maxLength(10)(p),
+        hasNumber: (p) => /\d/.test(p), // New validation for at least one number
+        hasSpecialChar: (p) => /[!@#$%^&*(),.?":{}|<>]/.test(p) // New validation for at least one special character
       },
       confirmedPassword: {
         required,
         sameAsPassword: sameAs("password")
+      },
+      email: {
+        required,
+        email
       }
     }
   },
@@ -236,5 +314,6 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 500px;
+  margin-top: 100px;
 }
 </style>

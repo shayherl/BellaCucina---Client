@@ -38,14 +38,14 @@
 
       <b-button
         type="submit"
-        variant="primary"
+        variant="dark"
         style="width:100px;display:block;"
         class="mx-auto w-100"
         >Login</b-button
       >
       <div class="mt-2">
         Do not have an account yet?
-        <router-link to="register"> Register in here</router-link>
+        <router-link to="register"> Register here</router-link>
       </div>
     </b-form>
     <b-alert
@@ -136,5 +136,6 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 400px;
+  margin-top: 100px;
 }
 </style>
