@@ -81,6 +81,7 @@ export default {
       try {
         const response = await mockGetRecipesPreview(parseInt(this.selectedHowMany));
         const recipes = response.data.recipes;
+        this.recipes = []
         this.recipes.push(...recipes);
       } catch (error) {
         console.log(error);

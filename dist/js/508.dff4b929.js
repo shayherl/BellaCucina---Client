@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkassignment_2_1"]=self["webpackChunkassignment_2_1"]||[]).push([[508],{9508:(e,s,t)=>{t.r(s),t.d(s,{default:()=>u});var i=function(){var e=this,s=e._self._c;return s("div",{staticClass:"container"},[s("RecipePreviewList",{staticClass:"FamilyRecipes center",attrs:{title:"My Family Recipes",kind:"family"}})],1)},n=[],a=t(1032);const c={components:{RecipePreviewList:a.Z}},l=c;var r=t(1001),p=(0,r.Z)(l,i,n,!1,null,"337bb962",null);const u=p.exports}}]);
-//# sourceMappingURL=508.dff4b929.js.map
