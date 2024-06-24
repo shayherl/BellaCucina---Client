@@ -1,38 +1,43 @@
 [
     {
-        "id": 234567,
-        "image": "https://img.spoonacular.com/recipes/234567-556x370.jpg",
-        "title": "Lemon Garlic Shrimp",
-        "readyInMinutes": 20,
-        "aggregateLikes": 280,
-        "vegetarian": false,
-        "vegan": false,
-        "glutenFree": true,
-        "viewed": false,
-        "summary": "Lemon Garlic Shrimp is a delightful seafood dish bursting with flavors. This recipe provides <b>320 calories</b>, <b>25g of protein</b>, and <b>12g of fat</b> per serving. It costs <b>$3.50 per serving</b> and covers <b>15%</b> of your daily vitamins and minerals. Enjoy this dish that serves 4, made with shrimp, lemon, garlic, and parsley. 280 people have tried and liked this recipe. It is brought to you by exampleblog.com. From preparation to the plate, it takes approximately <b>20 minutes</b>. This recipe scores <b>90%</b> in terms of health and taste."
-    },
-    {
-        "id": 345678,
-        "image": "https://img.spoonacular.com/recipes/345678-556x370.jpg",
-        "title": "Caprese Salad with Balsamic Glaze",
-        "readyInMinutes": 15,
-        "aggregateLikes": 180,
-        "vegetarian": true,
-        "vegan": false,
-        "glutenFree": true,
-        "viewed": false,
-        "summary": "Caprese Salad with Balsamic Glaze is a classic Italian dish showcasing fresh flavors. This recipe contains <b>250 calories</b>, <b>8g of protein</b>, and <b>18g of fat</b> per serving. It costs <b>$2.50 per serving</b> and covers <b>10%</b> of your daily vitamins and minerals. Serves 2, made with tomatoes, mozzarella, basil, and balsamic glaze. 180 people have tried and liked this recipe. It is brought to you by exampleblog.com. From preparation to the plate, it takes approximately <b>15 minutes</b>. This recipe scores <b>95%</b> in terms of health and taste."
-    },
-    {
-        "id": 456789,
-        "image": "https://img.spoonacular.com/recipes/456789-556x370.jpg",
-        "title": "Beef Stir-Fry with Vegetables",
-        "readyInMinutes": 25,
-        "aggregateLikes": 320,
-        "vegetarian": false,
-        "vegan": false,
-        "glutenFree": true,
-        "viewed": false,
-        "summary": "Beef Stir-Fry with Vegetables is a savory and nutritious dish. This recipe provides <b>380 calories</b>, <b>28g of protein</b>, and <b>15g of fat</b> per serving. It costs <b>$4.00 per serving</b> and covers <b>20%</b> of your daily vitamins and minerals. Serves 4, made with beef sirloin, bell peppers, broccoli, and soy sauce. 320 people have tried and liked this recipe. It is brought to you by exampleblog.com. From preparation to the plate, it takes approximately <b>25 minutes</b>. This recipe scores <b>88%</b> in terms of health and taste."
-    }
+    "id": 123460,
+    "imageName": "arencini.jpeg",
+    "title": "Arancini",
+    "owner": "By: Shahar and Shay",
+    "whenUsuallyMade": "When Usually Made: Shavout",
+    "readyInMinutes": 60,
+    "aggregateLikes": 250,
+    "vegetarian": false,
+    "vegan": false,
+    "glutenFree": false,
+    "summary": "Arancini are delicious Italian rice balls that are crispy on the outside and filled with a savory mixture of rice, cheese, and sometimes meat. This dish contains 300 calories, 8g of protein, and 15g of fat per serving. For $2.00 per serving, it covers 15% of your daily vitamins and minerals."
+},
+{
+    "id": 98765,
+    "imageName": "Pasta.jpeg",
+    "title": "Teriyaki Mushroom Cream Pasta",
+    "owner": "By: Shahar and Shay",
+    "whenUsuallyMade": "When Usually Made: It is always delicious",
+    "readyInMinutes": 30,
+    "aggregateLikes": 180,
+    "vegetarian": true,
+    "vegan": false,
+    "glutenFree": false,
+    "summary": "Teriyaki Mushroom Cream Pasta combines the rich flavors of teriyaki with creamy pasta and savory mushrooms. This dish contains 400 calories, 12g of protein, and 20g of fat per serving. For $3.50 per serving, it covers 20% of your daily vitamins and minerals."
+},
+{
+    "id": 54321,
+    "imageName": "Salmon.jpeg",
+    "title": "Salmon with Greens and Sliced Almonds",
+    "owner": "By: Shahar and Shay",
+    "whenUsuallyMade": "When Usually Made: Friday dinner",
+    "readyInMinutes": 25,
+    "aggregateLikes": 250,
+    "vegetarian": false,
+    "vegan": false,
+    "glutenFree": true,
+    "summary": "Oven-Baked Salmon with Greens and Sliced Almonds is a nutritious dish packed with omega-3 fatty acids and vitamins. This recipe provides 350 calories, 25g of protein, and 18g of fat per serving. It's gluten-free and costs $5.00 per serving."
+}
+
 ]
+
