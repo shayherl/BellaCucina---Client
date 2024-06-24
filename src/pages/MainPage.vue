@@ -27,7 +27,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container {
+  font-family: 'Calibri Light', 'Calibri';
+  
+  
+    }
 .RandomRecipes {
   margin: 100px 0 10px;
+  
+  
 }
 </style>

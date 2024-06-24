@@ -4,3 +4,9 @@
     <router-link to="/" exact>ET Go Home</router-link>
   </div>
 </template>
+<style scoped>
+.container {
+  font-family: 'Calibri Light', 'Calibri';
+}
+</style>
+

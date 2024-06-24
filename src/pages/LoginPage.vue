@@ -38,7 +38,7 @@
 
       <b-button
         type="submit"
-        variant="dark"
+        variant="outline-dark"
         style="width:100px;display:block;"
         class="mx-auto w-100"
         >Login</b-button
@@ -137,5 +137,6 @@ export default {
 .container {
   max-width: 400px;
   margin-top: 100px;
+  font-family: 'Calibri Light', 'Calibri';
 }
 </style>

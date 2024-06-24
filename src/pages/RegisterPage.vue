@@ -154,7 +154,7 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
-      <b-button type="reset" variant="outline-danger">Reset</b-button>
+      <b-button type="reset" variant="light">Reset</b-button>
       <b-button
         type="submit"
         variant="dark"
@@ -315,5 +315,11 @@ export default {
 .container {
   max-width: 500px;
   margin-top: 100px;
+  font-family: 'Calibri Light', 'Calibri';
+  
+}
+.title {
+  
+  font-family: 'Calibri Light', 'Calibri';
 }
 </style>
