@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <b-navbar toggleable="lg" class="custom-navbar">
-    <b-navbar-brand :to="{ name: 'main' }">Bella Cucina</b-navbar-brand>
+    <b-navbar-brand :to="{ name: 'main' }"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAYAAABWk2cPAAAACXBIWXMAAAsTAAALEwEAmpwYAAABbklEQVR4nO3UvUtcURAF8J8aFKzsjBrS2MdGrBK0tZYU2mQhoCFVIIWEmDoErKOoTUhjEe1tNOgf4AduZzoFKxNQC0lww4VZWDY+3V2fadwDw+O+OefMvHeZoYkmeIgJvIlnOt8ZurCEPyhVxG8sRv5W6EQBc1jAS+xFkX28j/wMivF+N3ipgc94ET414RmOqr6mHB/RVsVP508Z/EM8vangAM5xGR2PYhBvMXuDdjZ4g6FbCp8zPLlO+D06fCUfvA6/9SzCo+hsGy05FW3BTvj2XkUYia7m5Yv58B2+KjkUyW85F10J33TX/6ADv3CS48D34Gf4tmeRPkRXm+irw3wM76rGqQ9b4ZfmOhMPsBrEU6zhKw7Qn6FJm+g4ND/wJXSnFdeVfK9FK6YqNk25gbRtsvAYy7io0BQx2cgklOe2u447LIWuYWyESa3LvCv4SdcwmkX/y+8t4HkNUcizaKnOuFXRcUw3EEnXxD3CX3X+hOTjVmQ8AAAAAElFTkSuQmCC">&nbsp;&nbsp;Bella Cucina</b-navbar-brand>
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav>
@@ -65,8 +65,8 @@ export default {
 @import "@/scss/form-style.scss";
 
 #app {
-  font-family: Segoe UI, sans-serif;
-  font-size: 10 pt;
+  font-family: 'Calibri Light', 'Calibri';
+  font-size: larger;
   color: #000000;
   min-height: 100vh;
 }
@@ -86,6 +86,7 @@ export default {
 }
 .custom-navbar .navbar-brand {
   color: #000000; /* Custom brand color */
+  
 }
 .custom-navbar .nav-link {
   color: #000000; /* Custom link color */
