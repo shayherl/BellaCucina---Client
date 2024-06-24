@@ -1,12 +1,12 @@
 <template>
   <b-container>
-    <h3>
+    <h3 style="font-weight: bold;">
       {{ title }}:
       <slot></slot>
     </h3>
     <b-row>
       <b-col v-for="r in recipes" :key="r.id">
-        <RecipePreview class="recipePreview" :recipe="r" />
+        <RecipePreview class="recipePreview" :recipe="r" :isFamilyRecipe="FamilyRecipe"/>
       </b-col>
     </b-row>
   </b-container>
@@ -30,6 +30,10 @@ export default {
       type: String,
       required: true
     },
+    FamilyRecipe:{
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
@@ -50,9 +54,11 @@ export default {
         let response = {};
         if (this.kind === "regular"){
           response = mockGetRecipesPreview(amountToFetch);
+          this.FamilyRecipe = false;
         }
-        if (this.kind === "family"){
+        else if (this.kind === "family"){
           response = mockGetFamilyRecipesPreview(3);
+          this.FamilyRecipe = true;
         }
 
         console.log(response);
@@ -70,6 +76,9 @@ export default {
 
 <style lang="scss" scoped>
 .container {
+  // margin-top: 20px;
+  // margin-bottom: 20px;
   min-height: 400px;
+  font-family: 'Calibri Light', 'Calibri';
 }
 </style>

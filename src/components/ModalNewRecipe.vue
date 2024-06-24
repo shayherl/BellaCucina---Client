@@ -46,7 +46,7 @@
             <input type="text" v-model="ingredient.name" class="form-control" placeholder="Name" required>
             <input type="number" v-model="ingredient.amount" class="form-control ml-2" placeholder="Amount" required>
             <input type="text" v-model="ingredient.unit" class="form-control ml-2" placeholder="Unit" required>
-            <button type="button" class="btn btn-danger ml-2" @click="removeIngredient(index)">Remove</button>
+            <button type="button" variant="danger" class="btn btn-danger ml-2" @click="removeIngredient(index)">Remove</button>
           </div>
           <button type="button" class="btn btn-secondary" @click="addIngredient">Add Ingredient</button>
         </div>
@@ -61,8 +61,8 @@
           <input type="number" id="servings" v-model="formData.servings" class="form-control" required>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <b-button type="button" variant="light" @click="closeModal">Close</b-button>
+          <b-button type="submit" variant="outline-dark">Submit</b-button>
         </div>
       </form>
     </b-modal>
@@ -174,6 +174,8 @@ export default {
         vegetarian: false,
         vegan: false,
         glutenFree: false,
+        owner: '',
+        whenUsuallyMade: '',
         summary: '',
         instructions: '',
         extendedIngredients: [
@@ -187,6 +189,9 @@ export default {
 </script>
 
 <style>
+.container {
+  font-family: 'Calibri Light', 'Calibri';
+}
 .modal-footer {
   display: flex;
   justify-content: space-between;
