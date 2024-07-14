@@ -102,7 +102,7 @@ export default {
     openModal() {
       this.showModal = true;
     },
-    submitForm() {
+    async submitForm() {
       this.showModal = false;
       // Construct extendedIngredients array
       let extendedIngredientsArray = this.formData.extendedIngredients.map(ingredient => ({
@@ -131,25 +131,64 @@ export default {
         }
       }));
 
-      // Create newRecipe object
-      let newRecipe = {
-        id: Math.floor(100000 + Math.random() * 900000),
-        image: this.formData.image,
-        title: this.formData.title,
-        readyInMinutes: this.formData.readyInMinutes,
-        aggregateLikes: Math.floor(1 + Math.random() * 999),
-        vegetarian: this.formData.vegetarian,
-        vegan: this.formData.vegan,
-        glutenFree: this.formData.glutenFree,
-        summary: this.formData.summary,
-        analyzedInstructions: [],
-        instructions: this.formData.instructions,
-        extendedIngredients: extendedIngredientsArray, // Assign the constructed extendedIngredients array
-        servings: this.formData.servings
-      };
-      mockAddUserRecipe(newRecipe)
-      if (mockAddUserRecipe(newRecipe).status === 200){
-          this.message = mockAddUserRecipe(newRecipe).response.data.message;
+      // // Create newRecipe object
+      // let newRecipe = {
+      //   id: Math.floor(100000 + Math.random() * 900000),
+      //   image: this.formData.image,
+      //   title: this.formData.title,
+      //   readyInMinutes: this.formData.readyInMinutes,
+      //   aggregateLikes: Math.floor(1 + Math.random() * 999),
+      //   vegetarian: this.formData.vegetarian,
+      //   vegan: this.formData.vegan,
+      //   glutenFree: this.formData.glutenFree,
+      //   summary: this.formData.summary,
+      //   analyzedInstructions: [],
+      //   instructions: this.formData.instructions,
+      //   extendedIngredients: extendedIngredientsArray, // Assign the constructed extendedIngredients array
+      //   servings: this.formData.servings
+      // };
+      // mockAddUserRecipe(newRecipe)
+      // if (mockAddUserRecipe(newRecipe).status === 200){
+      //     this.message = mockAddUserRecipe(newRecipe).response.data.message;
+      //   }
+      let vege, veg, gluten;
+      if(this.formData.vegetarian){
+        vege = 1;
+      }
+      else{
+        vege = 0;
+      }
+      if(this.formData.vegan){
+        veg = 1;
+      }
+      else{
+        veg = 0;
+      }
+      if(this.formData.glutenFree){
+        gluten = 1;
+      }
+      else{
+        gluten = 0;
+      }
+      let response = await this.axios.post(
+          this.$root.store.server_domain + "/users/MyRecipes",
+          {
+            title: this.formData.title,
+            image: this.formData.image,
+            readyInMinutes: this.formData.readyInMinutes,
+            aggregateLikes: Math.floor(1 + Math.random() * 999),
+            vegetarian: vege,
+            vegan: veg,
+            glutenFree: gluten,
+            summary: this.formData.summary,
+            instructions: this.formData.instructions,
+            extendedIngredients: extendedIngredientsArray,
+            servings: this.formData.servings
+          }
+        );
+      console.log(response); 
+      if (response.status === 201){
+          this.message = "Recipe added successfully";
         }
       this.$root.toast("",this.message, "Light ");
       this.resetFormData();

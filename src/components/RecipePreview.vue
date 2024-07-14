@@ -78,18 +78,25 @@ export default {
       }
       this.recipe.viewed = true
   },
-  toggleFav(event) {
+  async toggleFav(event) {
       event.stopPropagation();
       this.isFav = !this.isFav;
-      localStorage.setItem(`favorite_${this.recipe.id}`, this.isFav.toString());
+      // localStorage.setItem(`favorite_${this.recipe.id}`, this.isFav.toString());
       if (this.isFav){
-        if (mockAddFavorite(this.recipe.id).status === 200){
-          this.message = mockAddFavorite(this.recipe.id).response.data.message;
+        response = await this.axios.post(
+          this.$root.store.server_domain + "/users/favorites",
+          {
+            recipeId: this.recipe.id,
+          }
+          
+          );
+        if (response.status === 200){
+          this.message = "The Recipe successfully saved as favorite";
         }
       }
-      else{
-        this.message = "The Recipe successfully removed from favorites"
-      }
+      // else{
+      //   this.message = "The Recipe successfully removed from favorites"
+      // }
       this.$root.toast("",this.message, "Light ");
     },
   }

@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <LoginPage v-if="!$root.store.username"/>
-    <RecipePreviewList title="Random Recipes" kind="regular" class="RandomRecipes center" />
+    <RecipePreviewList title="Random Recipes" kind="random" class="RandomRecipes center" />
     <RecipePreviewList v-if="$root.store.username"
       title="Last Viewed Recipes"
-      kind="regular"
+      kind="random"
       class="RandomRecipes center"
     ></RecipePreviewList>
     <!-- <div

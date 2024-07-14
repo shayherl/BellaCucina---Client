@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <RecipePreviewList title="My Favorites Recipes" kind="regular" class="FavoriteRecipes center" />
+    <RecipePreviewList title="My Favorites Recipes" kind="favorite" class="FavoriteRecipes center" />
   </div>
 </template>
 

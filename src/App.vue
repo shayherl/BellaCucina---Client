@@ -46,10 +46,14 @@ export default {
     ModalNewRecipe
   },
   methods: {
-    Logout() {
+    async Logout() {
+      let response = await this.axios.post(
+          // "https://test-for-3-2.herokuapp.com/user/Register",
+          this.$root.store.server_domain + "/auth/Logout"
+        );
+      console.log(response);
       this.$root.store.logout();
       this.$root.toast("Logout", "User logged out successfully", "success");
-
       this.$router.push("/").catch(() => {
         this.$forceUpdate();
       });

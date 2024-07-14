@@ -46,26 +46,42 @@ export default {
   methods: {
     async updateRecipes() {
       try {
-        // const response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/random",
-        // );
 
-        const amountToFetch = 2; // Set this to how many recipes you want to fetch
+        // const amountToFetch = 2; // Set this to how many recipes you want to fetch
         let response = {};
-        if (this.kind === "regular"){
-          response = mockGetRecipesPreview(amountToFetch);
+        if (this.kind === "random"){
+          // response = mockGetRecipesPreview(amountToFetch);
+          response = await this.axios.get(
+          this.$root.store.server_domain + "/recipes/random",
+          );
           this.FamilyRecipe = false;
         }
         else if (this.kind === "family"){
           response = mockGetFamilyRecipesPreview(3);
           this.FamilyRecipe = true;
         }
-
-        console.log(response);
-        const recipes = response.data.recipes;
-        console.log(recipes);
+        else if (this.kind === "favorite"){
+          response = await this.axios.get(
+          this.$root.store.server_domain + "/users/favorites",
+          );
+          this.FamilyRecipe = false;
+        }
+        else if (this.kind === "my"){
+          response = await this.axios.get(
+          this.$root.store.server_domain + "/users/MyRecipes",
+          );
+          this.FamilyRecipe = false;
+        }
+        let recipe = [];
+        if (this.FamilyRecipe){
+          recipe = response.data.recipes;
+        }
+        else{
+          recipe = response.data;
+        }
+        console.log(recipe);
         this.recipes = [];
-        this.recipes.push(...recipes);
+        this.recipes.push(...recipe);
       } catch (error) {
         console.log(error);
       }

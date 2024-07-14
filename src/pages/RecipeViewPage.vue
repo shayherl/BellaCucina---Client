@@ -55,11 +55,14 @@
           </div>
           <div class="wrapped">
             <div style="font-weight: bold;">Instructions: </div>
-            <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">
-                {{ s.step }}
-              </li>
-            </ol>
+            <p v-if="!isFamilyRecipe" v-html="recipe.instructions"></p>
+            <p v-else>
+              <ol>
+                <li v-for="s in recipe._instructions" :key="s.number">
+                  {{ s.step }}
+                </li>
+              </ol>
+            </p>
           </div>
         </div>
       </div>
@@ -97,7 +100,6 @@ export default {
     try {
       let response;
       // response = this.$route.params.response;
-
       try {
         // response = await this.axios.get(
         //   this.$root.store.server_domain + "/recipes/" + this.$route.params.recipeId,
@@ -105,10 +107,15 @@ export default {
         //     withCredentials: true
         //   }
         // );
-        // if(this.$route.params.category === "family"){
-        //   this.isFamilyRecipe = true;
-        // }
-        response = mockGetRecipeFullDetails(this.$route.params.recipeId);
+        if(this.isFamilyRecipe){
+          response = mockGetRecipeFullDetails(this.$route.params.recipeId);
+        }
+        else{
+          response = await this.axios.get(
+            this.$root.store.server_domain + "/recipes/fullInforamtion/"+ this.$route.params.recipeId,
+            );
+        }
+        
 
         // console.log("response.status", response.status);
         if (response.status !== 200) this.$router.replace("/NotFound");
@@ -117,9 +124,38 @@ export default {
         this.$router.replace("/NotFound");
         return;
       }
+      let instructions, analyzedInstructions, extendedIngredients, aggregateLikes, readyInMinutes, image, title, servings, vegetarian, vegan, glutenFree;
 
-      let {
-        analyzedInstructions,
+      if (!this.isFamilyRecipe) {
+        (
+          // let 
+          {instructions,
+          extendedIngredients,
+          aggregateLikes,
+          readyInMinutes,
+          image,
+          title,
+          servings,
+          vegetarian,
+          vegan,
+          glutenFree
+        } = response.data);
+        let _recipe = {
+          instructions,
+          extendedIngredients,
+          aggregateLikes,
+          readyInMinutes,
+          image,
+          title,
+          servings,
+          vegetarian,
+          vegan,
+          glutenFree
+        };
+        this.recipe = _recipe;
+      } 
+      else {
+        ({analyzedInstructions,
         instructions,
         extendedIngredients,
         aggregateLikes,
@@ -130,8 +166,7 @@ export default {
         vegetarian,
         vegan,
         glutenFree
-      } = response.data.recipe;
-
+        } = response.data.recipe);
         // Concatenate name with each step in analyzedInstructions
         let _instructions = analyzedInstructions.flatMap(instruction => {
         let sectionName = instruction.name ? `${instruction.name}` : '';
@@ -140,7 +175,6 @@ export default {
           step: `${sectionName}${step.step}`
         }));
       });
-
       let _recipe = {
         instructions: analyzedInstructions,
         _instructions,
@@ -155,26 +189,33 @@ export default {
         vegan,
         glutenFree
       };
-
       this.recipe = _recipe;
+      }
       this.isFav= localStorage.getItem(`favorite_${this.recipe.id}`) === 'true';
     } catch (error) {
       console.log(error);
     }
   },
   methods: {
-  toggleFav(event) {
+    async toggleFav(event) {
       event.stopPropagation();
       this.isFav = !this.isFav;
-      localStorage.setItem(`favorite_${this.recipe.id}`, this.isFav.toString());
+      // localStorage.setItem(`favorite_${this.recipe.id}`, this.isFav.toString());
       if (this.isFav){
-        if (mockAddFavorite(this.recipe.id).status === 200){
-          this.message = mockAddFavorite(this.recipe.id).response.data.message;
+        response = await this.axios.post(
+          this.$root.store.server_domain + "/users/favorites",
+          {
+            recipeId: this.recipe.id,
+          }
+          
+          );
+        if (response.status === 200){
+          this.message = "The Recipe successfully saved as favorite";
         }
       }
-      else{
-        this.message = "The Recipe successfully removed from favorites"
-      }
+      // else{
+      //   this.message = "The Recipe successfully removed from favorites"
+      // }
       this.$root.toast("",this.message, "Light ");
     },
   }
