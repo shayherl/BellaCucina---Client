@@ -106,30 +106,33 @@ export default {
       this.showModal = false;
       // Construct extendedIngredients array
       let extendedIngredientsArray = this.formData.extendedIngredients.map(ingredient => ({
-        id: Math.floor(1000 + Math.random() * 9000),
-        aisle: '',
-        image: '',
-        consistency: '',
-        name: ingredient.name,
-        nameClean: ingredient.name,
+        // id: Math.floor(1000 + Math.random() * 9000),
+        // aisle: '',
+        // image: '',
+        // consistency: '',
+        // name: ingredient.name,
+        // nameClean: ingredient.name,
         original: `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`,
-        originalName: ingredient.name,
-        amount: ingredient.amount,
-        unit: ingredient.unit,
-        meta: [],
-        measures: {
-          us: {
-            amount: ingredient.amount,
-            unitShort: ingredient.unit,
-            unitLong: ingredient.unit
-          },
-          metric: {
-            amount: ingredient.amount,
-            unitShort: ingredient.unit,
-            unitLong: ingredient.unit
-          }
-        }
+        // originalName: ingredient.name,
+        // amount: ingredient.amount,
+        // unit: ingredient.unit,
+        // meta: [],
+        // measures: {
+        //   us: {
+        //     amount: ingredient.amount,
+        //     unitShort: ingredient.unit,
+        //     unitLong: ingredient.unit
+        //   },
+        //   metric: {
+        //     amount: ingredient.amount,
+        //     unitShort: ingredient.unit,
+        //     unitLong: ingredient.unit
+        //   }
+        // }
       }));
+      // let extendedIngredientsString = JSON.stringify(extendedIngredientsArray);
+      // let extendedIngredientsStringArray = extendedIngredientsArray.map(ingredient => JSON.stringify(ingredient));
+
 
       // // Create newRecipe object
       // let newRecipe = {

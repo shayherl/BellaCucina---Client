@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex align-items-center mb-3">
       <label for="cuisines" class="mb-0 mr-2">Cuisine:</label>
-      <select id="cuisines"  class="form-control mr-2" v-model="selectedCuisine">
+      <select id="cuisines" class="form-control mr-2" v-model="selectedCuisine" @change="updateFilters">
         <option value="">Select Cuisine</option>
         <option v-for="cuisine in cuisines" :key="cuisine">{{ cuisine }}</option>
       </select>
@@ -10,7 +10,7 @@
 
     <div class="d-flex align-items-center mb-3">
       <label for="diets" class="mb-0 mr-2">Diet:</label>
-      <select id="diets" class="form-control mr-2" v-model="selectedDiet">
+      <select id="diets" class="form-control mr-2" v-model="selectedDiet" @change="updateFilters">
         <option value="">Select Diet</option>
         <option v-for="diet in diets" :key="diet">{{ diet }}</option>
       </select>
@@ -18,7 +18,7 @@
 
     <div class="d-flex align-items-center mb-3">
       <label for="intolerances" class="mb-0 mr-2">Intolerance:</label>
-      <select id="intolerances"  class="form-control mr-2" v-model="selectedIntolerance">
+      <select id="intolerances" class="form-control mr-2" v-model="selectedIntolerance" @change="updateFilters">
         <option value="">Select Intolerance</option>
         <option v-for="intolerance in intolerances" :key="intolerance">{{ intolerance }}</option>
       </select>
@@ -41,6 +41,16 @@ export default {
       selectedDiet: '',
       selectedIntolerance: ''
     };
+  },
+  methods: {
+    updateFilters() {
+      // Emit an event with the selected filter values
+      this.$emit('filters-updated', {
+        selectedCuisine: this.selectedCuisine,
+        selectedDiet: this.selectedDiet,
+        selectedIntolerance: this.selectedIntolerance
+      });
+    }
   }
 };
 </script>

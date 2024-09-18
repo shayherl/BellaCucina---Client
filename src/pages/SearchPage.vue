@@ -21,12 +21,13 @@
       </select>
     </div>
 
-    <Filters />
+    <Filters @filters-updated="handleFiltersUpdated" />
+
     <b-button @click="search" variant="outline-dark">Search</b-button>
 
   </div>
     <!-- Display Search Results -->
-    <div v-if="showSearchResults && recipes.length > 0" class="mt-4">
+    <div v-if="showSearchResults && this.recipes.length > 0" class="mt-4">
         <h3 style="font-weight: bold;">
           Search results:
           <slot></slot>
@@ -35,18 +36,18 @@
       <label for="sortBy" class="sort-label mb-0">Sort by:</label>
       <select id="sortBy" v-model="selectedSortBy" class="form-control sort-select">
         <option value="">Select how to sort</option>
-        <option value="readyInMinutes">Time (minutes)</option>
-        <option value="aggregateLikes">Popularity (likes)</option>
+        <option value="time">Time (minutes)</option>
+        <option value="popularity">Popularity (likes)</option>
       </select>
-      <b-button @click="sortRecipes" variant="outline-dark">Sort</b-button>
+      <b-button @click="search" variant="outline-dark">Sort</b-button>
     </div>
         <b-row>
-          <b-col v-for="r in recipes" :key="r.id">
+          <b-col v-for="r in this.recipes" :key="r.id">
             <RecipePreview class="recipePreview" :recipe="r" />
           </b-col>
         </b-row>
     </div>
-    <div v-else-if="showSearchResults && recipes.length === 0">
+    <div v-else-if="showSearchResults && this.recipes.length === 0">
       No results found.
     </div>
   </div>
@@ -68,33 +69,86 @@ export default {
       lastSearchTerm: "",
       selectedHowMany: '5',
       recipes: [],
-      selectedSortBy: '',
-      showSearchResults: false // Initially, don't show search results
+      selectedSortBy: null,
+      // selectedSortDir: null,
+      showSearchResults: false, // Initially, don't show search results
+      selectedCuisine: null,
+      selectedDiet: null,
+      selectedIntolerance: null
     };
   },
   methods: {
+    handleFiltersUpdated(filters) {
+      // Update the selected filters based on the event emitted by the Filters component
+      this.selectedCuisine = filters.selectedCuisine;
+      this.selectedDiet = filters.selectedDiet;
+      this.selectedIntolerance = filters.selectedIntolerance;
+    },
     async search() {
       // Perform search operation using searchTerm
       // For now, just updating lastSearchTerm and displaying searchResults
       this.lastSearchTerm = this.searchTerm;
       // Simulating search results retrieval
       try {
-        const response = await mockGetRecipesPreview(parseInt(this.selectedHowMany));
-        const recipes = response.data.recipes;
-        this.recipes = []
-        this.recipes.push(...recipes);
+        // if(this.selectedSortBy === "time"){
+        //   this.selectedSortDir = "asc"
+        // }
+        // else{
+        //   this.selectedSortDir = "desc"
+        // }
+        const response = await this.axios.get(
+          this.$root.store.server_domain + "/recipes/search",
+          {
+          params: {
+          recipeName: this.searchTerm,
+          cuisine: this.selectedCuisine,
+          diet: this.selectedDiet,
+          intolerance: this.selectedIntolerance,
+          number: this.selectedHowMany,
+          sort: this.selectedSortBy,
+          // sortDirection: this.selectedSortDir
+            }
+          }
+          )
+        // const recipes = response.data;
+        this.recipes = response.data;
+        console.log("search results:", this.recipes);
+        // this.recipes.push(...recipes);
       } catch (error) {
         console.log(error);
       }
       // Set showSearchResults to true to display search results
       this.showSearchResults = true;
     },
-    sortRecipes(recipes, sortBy) {
-      if (sortBy === "readyInMinutes"){
-        return recipes.sort((a, b) => a.readyInMinutes - b.readyInMinutes);
-      }
-      return recipes.sort((a, b) => a.aggregateLikes - b.aggregateLikes);
-    }
+    // async sortRecipes(recipes, sortBy) {
+    //   try {
+    //     const response = await this.axios.get(
+    //       this.$root.store.server_domain + "/recipes/search",
+    //       {
+    //       params: {
+    //       recipeName: this.searchTerm,
+    //       cuisine: this.selectedCuisine,
+    //       diet: this.selectedDiet,
+    //       intolerance: this.selectedIntolerance,
+    //       number: this.selectedHowMany,
+    //       sort: this.selectedSortBy
+    //         }
+    //       }
+    //       )
+    //     // const recipes = response.data;
+    //     this.recipes = response.data;
+    //     console.log("search results:", this.recipes);
+    //     // this.recipes.push(...recipes);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    //   // Set showSearchResults to true to display search results
+    //   this.showSearchResults = true;
+    //   if (sortBy === "readyInMinutes"){
+    //     return recipes.sort((a, b) => a.readyInMinutes - b.readyInMinutes);
+    //   }
+    //   return recipes.sort((a, b) => a.aggregateLikes - b.aggregateLikes);
+    // }
     
   }
 };

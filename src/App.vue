@@ -21,7 +21,7 @@
         </b-nav-item-dropdown>
         <b-nav-item-dropdown right v-if="$root.store.username">
           <template #button-content>
-            <em>{{ !$root.store.username }}</em>
+            <em> {{ $root.store.username }} </em>
           </template>
           <b-dropdown-item @click="openModal" >Add New Recipe</b-dropdown-item>
           <b-dropdown-item :to="{ name: 'favorites' }">My Favorites</b-dropdown-item>
@@ -73,6 +73,9 @@ export default {
   font-size: larger;
   color: #000000;
   min-height: 100vh;
+  width: 100%; /* Make the width full screen */
+  margin: 0; /* Remove any margins */
+  padding: 0 20px;
 }
 
 #nav {

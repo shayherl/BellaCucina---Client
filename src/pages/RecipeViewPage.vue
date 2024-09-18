@@ -4,7 +4,7 @@
       <div class="recipe-header mb-2 mt-3 mb-4">
         <h1 style="font-weight: bold;">{{ recipe.title }}</h1>
         <img v-if="!isFamilyRecipe" 
-         :src="recipe.image" 
+         :src="recipe.imageURL" 
          class="center" />
         <img v-else 
          :src="require(`@/assets/${recipe.image}`)" 
@@ -94,37 +94,40 @@ export default {
         }
         return false;
       }
+    },
+    isMyRecipe:{
+      get(){
+        if(this.$route.params.category === "my"){
+          return true;
+        }
+        return false;
+      }
     }
   },
   async created() {
     try {
       let response;
-      // response = this.$route.params.response;
       try {
-        // response = await this.axios.get(
-        //   this.$root.store.server_domain + "/recipes/" + this.$route.params.recipeId,
-        //   {
-        //     withCredentials: true
-        //   }
-        // );
         if(this.isFamilyRecipe){
           response = mockGetRecipeFullDetails(this.$route.params.recipeId);
+        }
+        else if(this.isMyRecipe){
+          response = await this.axios.get(
+          this.$root.store.server_domain + "/users/MyRecipes/"+ this.$route.params.recipeId,
+          );
         }
         else{
           response = await this.axios.get(
             this.$root.store.server_domain + "/recipes/fullInforamtion/"+ this.$route.params.recipeId,
             );
         }
-        
-
-        // console.log("response.status", response.status);
         if (response.status !== 200) this.$router.replace("/NotFound");
       } catch (error) {
         console.log("error.response.status", error.response.status);
         this.$router.replace("/NotFound");
         return;
       }
-      let instructions, analyzedInstructions, extendedIngredients, aggregateLikes, readyInMinutes, image, title, servings, vegetarian, vegan, glutenFree;
+      let instructions, analyzedInstructions, extendedIngredients, aggregateLikes, readyInMinutes, image, imageURL, title, servings, vegetarian, vegan, glutenFree;
 
       if (!this.isFamilyRecipe) {
         (
@@ -133,19 +136,20 @@ export default {
           extendedIngredients,
           aggregateLikes,
           readyInMinutes,
-          image,
+          imageURL,
           title,
           servings,
           vegetarian,
           vegan,
           glutenFree
         } = response.data);
+    
         let _recipe = {
           instructions,
           extendedIngredients,
           aggregateLikes,
           readyInMinutes,
-          image,
+          imageURL,
           title,
           servings,
           vegetarian,
@@ -153,6 +157,9 @@ export default {
           glutenFree
         };
         this.recipe = _recipe;
+        // if (this.isMyRecipe){
+        //   this.recipe.extendedIngredients = recipe.map(ingredient => JSON.parse(extendedIngredients));
+        // }
       } 
       else {
         ({analyzedInstructions,
@@ -201,7 +208,7 @@ export default {
       event.stopPropagation();
       this.isFav = !this.isFav;
       // localStorage.setItem(`favorite_${this.recipe.id}`, this.isFav.toString());
-      if (this.isFav){
+      if (!this.isMyRecipe && this.isFav){
         response = await this.axios.post(
           this.$root.store.server_domain + "/users/favorites",
           {

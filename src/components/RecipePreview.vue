@@ -5,13 +5,13 @@
     class="mb-2"
   >
     <img v-if="!isFamilyRecipe" 
-         :src="recipe.image"
+         :src="recipe.imageURL"
          class="card-img-top recipe-preview"
-         @click="goToRecipe(recipe.id)">
+         @click="goToRecipe(recipe.id, recipe.title)">
     <img v-else 
          :src="require(`@/assets/${recipe.imageName}`)" 
          class="card-img-top recipe-preview"
-         @click="goToRecipe(recipe.id)">
+         @click="goToRecipe(recipe.id, recipe.title)">
     <b-card-body>
       <b-card-title style="font-weight: bold;"> {{ recipe.title }} </b-card-title>
       <b-card-text>
@@ -23,7 +23,7 @@
         <div style="display: flex;  margin-right: 8px; margin-bottom: 10px; align-items: center;">
           <p><img style="width:20px; height:20px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA6klEQVR4nI3SO05DMRCF4S8Sgo6HILAAQGyBlAg6XgUFJdkIC0hYAZCsgJr1gQ7yja6ML+Fv7Bl7ZuwzQ5sxbjAta+y1nGGJGW5xjjvMscDpUOAVXrHT8z339rt4w2WrYgJHlT++PiO846TvXFYVh4K7FyTBD4flj/4ZHF5woKgZcWq28InNxtk9rrN5wqRx4RFfRe2aSYlrVj7CBx7WVR6XPnZsl8Ak8Mef9ztjUVQMGyXBEHul3ysyOXHUfa7p+nxcH2RykqB7QatiAi+GMmdyciF/iihRNWvsJP5VsUUGIGqmHVlX4vT5BgO0HzAkH86YAAAAAElFTkSuQmCC"> {{ recipe.readyInMinutes }} minutes </p>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <p><img style="width:20px; height:20px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA7UlEQVR4nN3TMSvFURjH8Y+LBSmDyVVIZCIy6Cp3NHkJXoDBZpHXYCajgVhYyW64KUlKpIjVW9A/zzXo/u8f/zP51a+e8/Sc7zmn8zz8B1XRlwK0hns8YaIs7BrD2MR6GVA/HiPewUoZ2Cp2I77B4F9BvbjDZPgWYxhF129A3TjGVqxrOA9f4AHzeZvHMYcZVHCC7YhbaQmHebBs4xFeMY2RgpvXsV/0vFPMFhX5bJGNVLA9LKeCXWIoBayC5x8c+AXLmrMjp2YRZ+0g2Tc38I4pHOAt5jLLN32FFyy0g/VgIGaxqc7IfXde76XTB2/rJ7Fn2hiwAAAAAElFTkSuQmCC">{{ recipe.aggregateLikes }}</p>
+          <p><img style="width:20px; height:20px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA7UlEQVR4nN3TMSvFURjH8Y+LBSmDyVVIZCIy6Cp3NHkJXoDBZpHXYCajgVhYyW64KUlKpIjVW9A/zzXo/u8f/zP51a+e8/Sc7zmn8zz8B1XRlwK0hns8YaIs7BrD2MR6GVA/HiPewUoZ2Cp2I77B4F9BvbjDZPgWYxhF129A3TjGVqxrOA9f4AHzeZvHMYcZVHCC7YhbaQmHebBs4xFeMY2RgpvXsV/0vFPMFhX5bJGNVLA9LKeCXWIoBayC5x8c+AXLmrMjp2YRZ+0g2Tc38I4pHOAt5jLLN32FFyy0g/VgIGaxqc7IfXde76XTB2/rJ7Fn2hiwAAAAAElFTkSuQmCC">{{ recipe.aggregateLikes }} likes</p>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <b-button variant="link" class="text-decoration-none mb-2" @click="toggleFav">
             <img v-if="!isFav" style="width:20px; height:20px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADTElEQVR4nO2ZS2xNURSGv2olaCkDIU0x8ChC0DLwSIzExCNCg4kYCErFSBkQBEmnpJ5BVJuYeM2olmEjRBAJYuCtiXhTVaKtrOQ/yU573J57e3q7m9wvOcm9Z+299lpnr73P2utAhgwZMmTwnCJgJ9AAPAGagVagCagHdgOTk9A3Bdijvk3S1Szddq8CmBSnA7OBm0BHhKsduA7MTKBvltq0R9TZAJT0xIGBQJUz4CfgNLBMs5MLDALGAEuB48Bntf0L7AeyHX32+6Bkgb5jwBLpMF250r0cOKM2wQM6AuQk68QI4JaU/AQOAMMi9BsK7FOYWN/zcsCuWt0z2V617Y5hcr7FmZ3hycxE4MRrhUKyWGi9ko5ax4mXwIwU9JUAbxxnIs1MleNEAakzTjqCWDfHxvZAX4HjzOEoC7td4ZTKTIQ9yVZdxTHoK1aYtXWnL9idbE3ERYWuuDgkG22LDqXI2U2iLOyoBIs9LvKd3XFiWINdEtoW6ztnZeuOMGG9hLaH+84K2XojTPhMwgn4T5FsfRom/CFhHv6TJ1vN5i4Eb09LFXxniJN1dOGdhD15CaaLQtlqL8guPJSwR5lmmpgjWx+ECWsk3Iz/bJWt58KE5RJW4z81snXL/05sJvzi+YIfDHyTrbYNh3JPDUrxlzWy8U6iRtvUyBzKwj+ygPuysay7aWtSw5X4xyrZ9jZK+Jc7e7Rlmr6QLwf+u8g7Y8fIu+pgWaYvVMum28kcC6Y7BYRN9D1lsuUXMDXZzhvU+TewiL5jsWwwW9anqiQoRFgFcB7pZ4ESw0gFh0RYLF5wnEnnzCwEvmvsi3Ecl63OddWJ0bX0Pms1lo15STbEQrZKmEGN6mQq5cuI41Q6Zdqa3hgnS+XQNg1yTaXVuDBdddLdprJqr2YXVrD+qgGfA3Nj0DkfeOEkrVbYTgtWoHjkVN4rU4zjHH1z+SNdT5SFp70AcMpZN43A+CQfRqPz2eCEPiv06QsrOO+36AkPSNDe4n6jU7V5r28uXjASuOzMTp0KBJ0pVFGtw9lara93lAIfZKRtCKsdmVUwPzoL2mbFa0YDV5ynbmnOUee/zdwo+hHrlNYEDtibejv9lGnAY132u1+T79lJMwPp4B+umggDgRN8wAAAAABJRU5ErkJggg==" alt="Image 1" >
@@ -66,16 +66,24 @@ export default {
     isFamilyRecipe:{
       type: Boolean,
       default: false
+    },
+    isMyRecipe:{
+      type: Boolean,
+      default: false
     }
   },
   methods: {
-    goToRecipe(recipeId) {
+    goToRecipe(recipeId, title) {
       if (this.isFamilyRecipe){
         this.$router.push({name: 'recipe', params: { recipeId: recipeId, category: "family"}});
+      }
+      else if (this.isMyRecipe){
+        this.$router.push({name: 'recipe', params: { recipeId: title, category: "my"}});
       }
       else{
         this.$router.push({name: 'recipe', params: { recipeId: recipeId, category: "regular"}});
       }
+      
       this.recipe.viewed = true
   },
   async toggleFav(event) {
