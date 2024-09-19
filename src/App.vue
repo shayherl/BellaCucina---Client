@@ -76,6 +76,27 @@ export default {
   width: 100%; /* Make the width full screen */
   margin: 0; /* Remove any margins */
   padding: 0 20px;
+
+  background-image: url('https://media.istockphoto.com/id/1313187927/vector/cooking-food-and-vegetables-background.jpg?s=612x612&w=0&k=20&c=qC9BPv5TLtYEh-_myYacOZSugAEUx4S_uq5s6H33-ss=');
+  background-size: cover; /* Make the image cover the entire background */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Ensure the image doesn't repeat */
+}
+
+#app::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.000001); /* White overlay with 50% opacity */
+  z-index: -1; /* Ensure it sits behind the content */
+}
+
+.custom-navbar {
+  background-color: rgba(198, 188, 151, 0.8); /* Add opacity to make navbar blend with background */
+  color: #000000; /* Custom text color */
 }
 
 #nav {
@@ -87,10 +108,10 @@ export default {
   color: #000000;
 }
 
-.custom-navbar {
-  background-color: #c6bc97; /* Custom background color */
-  color: #000000; /* Custom text color */
-}
+// .custom-navbar {
+//   background-color: #c6bc97; /* Custom background color */
+//   color: #000000; /* Custom text color */
+// }
 .custom-navbar .navbar-brand {
   color: #000000; /* Custom brand color */
   

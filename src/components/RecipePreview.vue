@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       image_load: false,
-      isFav: localStorage.getItem(`favorite_${this.recipe.id}`) === 'true',
+      isFav: false,
       message: ""
     };
   },
@@ -71,6 +71,19 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  async mounted(){
+    const response = await this.axios.get(
+          this.$root.store.server_domain + "/users/favoritesID",      
+          );
+        if (response.status === 401){
+          return
+        }
+        const favorites = response.data;
+        console.log(favorites)
+        this.isFav = favorites.some(favID =>favID ===this.recipe.id);
+        console.log(this.recipe.id)
+        console.log(this.isFav)
   },
   methods: {
     goToRecipe(recipeId, title) {
@@ -89,7 +102,6 @@ export default {
   async toggleFav(event) {
       event.stopPropagation();
       this.isFav = !this.isFav;
-      // localStorage.setItem(`favorite_${this.recipe.id}`, this.isFav.toString());
       if (this.isFav){
         response = await this.axios.post(
           this.$root.store.server_domain + "/users/favorites",
@@ -102,9 +114,6 @@ export default {
           this.message = "The Recipe successfully saved as favorite";
         }
       }
-      // else{
-      //   this.message = "The Recipe successfully removed from favorites"
-      // }
       this.$root.toast("",this.message, "Light ");
     },
   }

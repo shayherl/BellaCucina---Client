@@ -8,7 +8,8 @@
     </div>      
     
     <!-- Display Last Search Term -->
-    <div v-if="lastSearchTerm" class="mb-2">
+    <!-- <div v-if="lastSearchTerm" class="mb-2"> -->
+    <div class="mb-2">
       Last searched term: {{ lastSearchTerm }}
     </div>
 
@@ -77,6 +78,9 @@ export default {
       selectedIntolerance: null
     };
   },
+  created(){
+    this.lastSearchTerm = sessionStorage.getItem('searchTerm');
+  },
   methods: {
     handleFiltersUpdated(filters) {
       // Update the selected filters based on the event emitted by the Filters component
@@ -119,37 +123,8 @@ export default {
       }
       // Set showSearchResults to true to display search results
       this.showSearchResults = true;
-    },
-    // async sortRecipes(recipes, sortBy) {
-    //   try {
-    //     const response = await this.axios.get(
-    //       this.$root.store.server_domain + "/recipes/search",
-    //       {
-    //       params: {
-    //       recipeName: this.searchTerm,
-    //       cuisine: this.selectedCuisine,
-    //       diet: this.selectedDiet,
-    //       intolerance: this.selectedIntolerance,
-    //       number: this.selectedHowMany,
-    //       sort: this.selectedSortBy
-    //         }
-    //       }
-    //       )
-    //     // const recipes = response.data;
-    //     this.recipes = response.data;
-    //     console.log("search results:", this.recipes);
-    //     // this.recipes.push(...recipes);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    //   // Set showSearchResults to true to display search results
-    //   this.showSearchResults = true;
-    //   if (sortBy === "readyInMinutes"){
-    //     return recipes.sort((a, b) => a.readyInMinutes - b.readyInMinutes);
-    //   }
-    //   return recipes.sort((a, b) => a.aggregateLikes - b.aggregateLikes);
-    // }
-    
+      sessionStorage.setItem('searchTerm', this.searchTerm);
+    }
   }
 };
 </script>
